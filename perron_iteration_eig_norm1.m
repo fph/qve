@@ -22,6 +22,9 @@ R=partialprod(b,e,1)+partialprod(b,e,2);
 [useless,j]=max(real(diag(Lambda)));
 w=V(:,j);
 
+
+norm_helper=w'*(eye(n)-R);
+
 iter=0;
 while(res>n*tol && iter<=maxit)
    iter=iter+1;
@@ -30,9 +33,8 @@ while(res>n*tol && iter<=maxit)
    [useless,j]=max(real(diag(Lambda)));
    u=V(:,j);
    
-   v1=u-b*kron(e,u)-b*kron(u,e);
    v2=b*kron(u,u);
-   t=-(w'*v1)/(w'*v2);
+   t=-(norm_helper*u)/(w'*v2);
    y=t*u;
    
    x=e-y;res=norm(x-a-b*kron(x,x));
