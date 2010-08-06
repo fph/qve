@@ -24,6 +24,7 @@ w=V(:,j);
 
 
 norm_helper=w'*(eye(n)-R);
+norm_helper2=partialprod(b,w,3);
 
 iter=0;
 while(res>n*tol && iter<=maxit)
@@ -33,8 +34,7 @@ while(res>n*tol && iter<=maxit)
    [useless,j]=max(real(diag(Lambda)));
    u=V(:,j);
    
-   v2=b*kron(u,u);
-   t=-(norm_helper*u)/(w'*v2);
+   t=-(norm_helper*u)/(u'*norm_helper2*u);
    y=t*u;
    
    x=e-y;res=norm(x-a-b*kron(x,x));
