@@ -30,5 +30,5 @@ for lambda=lambdas
     times=[times [time1/tries1;time2/tries2;time3/tries3]];
     iters=[iters [iter1;iter2;iter3]];
 end
-save 'last_time_experiments_notimeit' iters times;
+save 'last_time_experiments_notimeit' iters times lambdas;
 plot(lambdas,times(1,:),'-',lambdas,times(2,:),'--',lambdas,times(3,:),'-.');
