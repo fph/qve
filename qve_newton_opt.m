@@ -12,5 +12,5 @@ while(res>n*tol && iter<=maxit)
   x=mat\rhs;
   bxx=b*kron(x,x);
   res=norm(x-a-bxx);
-  disp(sprintf('%3d residual: %g',iter,res));
+%  disp(sprintf('%3d residual: %g',iter,res));
 end
