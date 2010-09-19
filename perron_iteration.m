@@ -10,33 +10,33 @@ function [x res iter]=perron_iteration(a,b,eig_method,tol,maxit)
 % eig_method is as in perronvector.m
 %
 % res=residual, iter=number of iterations
+% tol=tolerance (e.g. 1.e-15), maxit=max number of iterations (e.g. 10000)
 % iterates until res<tol or iter>maxit
 % (c) f.poloni@sns.it 2009-2010
-
-if(not(exist('maxit','var')))
-   maxit=inf;
-end
 
 n=size(a,1);
 e=ones(n,1);
 y=a;
 x=e-y;res=norm(x-a-b*kron(x,x));
-iter=0;
-%disp(sprintf('%3d residual: %g',iter,res));
 
 R=partialprod(b,e,1)+partialprod(b,e,2);
+[w unused]=perronvector(R',eig_method,tol,e);
+
+
+norm_helper=w'*(eye(n)-R);
+norm_helper2=partialprod(b,w,3);
 
 iter=0;
 while(res>n*tol && iter<=maxit)
    iter=iter+1;
    Py=R-partialprod(b,y,1);
    [u lambda]=perronvector(Py,eig_method,tol,y);
-   v1=u-b*kron(e,u)-b*kron(u,e);
-   v2=b*kron(u,u);
-   t=-(e'*v1)/(e'*v2);
+   
+   t=-(norm_helper*u)/(u'*norm_helper2*u);
    y=t*u;
    
    x=e-y;res=norm(x-a-b*kron(x,x));
    disp(sprintf('%3d residual: %g',iter,res));
 end
 x=e-y;
+
