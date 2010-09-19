@@ -1,11 +1,21 @@
 function [v lambda]=perronvector(P,method,tol,v0);
 %
-% gets the Perron vector (or the maximum real part one) of a P-matrix
+% [v lambda]=perronvector(P,method,tol,v0);
+%
+% gets the Perron vector (or the maximum real part one) of a positive matrix
 % normalized s.t. norm(v,2)=1 and v>0
 % v0 is a "guess" of the vector (that may or may not 
 % be used by the algorithm)
 % tol is the tolerance (that may or may not...)
 %
+% available methods:
+% 'eig'
+% 'eigs'
+% 'power'
+% 'squaring' -> power method + successive squaring acceleration
+% 'squaring2'-> same but more aggressive acceleration
+% % (c) f.poloni@sns.it 2009-2010
+
 n=size(P,1);
 if(not(exist('v0','var')))
     v0=rand(n,1);

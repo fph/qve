@@ -1,10 +1,17 @@
 function [x res iter]=perron_iteration(a,b,eig_method,tol,maxit)
 %
-% function x=perron_iteration(a,b,eig_method,tol,its)
+% [x res iter]=perron_iteration(a,b,eig_method,tol,maxit)
+% solves a QVE M*x=a+b*(x,x)
+% b should be a nxn^2 matrix, b(x,x)=b*kron(x,x)
+% assumes M=I and that x=e is a (nonnecessarily minimal) solution
 %
-% computes the minimal solution of a MBT using the Perron iteration
-% tol=max. relative residual allowed
-% its=max. iterations (may be inf)
+% uses the Perron iteration [Meini, Poloni '10 arXiv]
+%
+% eig_method is as in perronvector.m
+%
+% res=residual, iter=number of iterations
+% iterates until res<tol or iter>maxit
+% (c) f.poloni@sns.it 2009-2010
 
 if(not(exist('maxit','var')))
    maxit=inf;

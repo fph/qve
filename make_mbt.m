@@ -1,4 +1,13 @@
 function [a M BM]=make_mbt(kind,param);
+% [a M b]=make_mbt(kind,param);
+%
+% generates an example Markovian binary tree
+%
+% make_mbt('latouche',lambda) and 
+% make_mbt('latouche2',lambda)
+% generate the examples in [Hautphenne, Latouche, Remiche 08]
+% % (c) f.poloni@sns.it 2009-2010
+
 if(strcmp(kind,'latouche')==1)
   delta=param;
   D0=zeros(9);
