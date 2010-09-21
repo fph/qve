@@ -1,5 +1,13 @@
 function newb=juggleb(b,mode)
-%transforms b without modifying the quadratic form t->b(t,t)
+%performs various de-symmetrizations on b without
+%affecting the quadratic form t->b(t,t)
+%
+% newb=juggleb(oldb,mode)
+%
+% mode may be: 'nothing', 'transpose','symmetrize','desymmetrize1','desymmetrize2'
+%
+% see [Meini, Poloni '10, Arxiv]
+% (c) f.poloni@sns.it 2009-2010
 
 n=size(b,1);
 if(strcmp(mode,'nothing'))
