@@ -36,9 +36,14 @@ for iter=1:its
    t=-(norm_helper*u)/(u'*norm_helper2*u);
    
    u=t*u;
-   Temp=pinv(P-lambda*eye(n))*(eye(n)-u*v'/(v'*u))*partialprod(b,u,2);
+   
+   Temp=pinv(P-lambda*eye(n));
+   Temp=Temp-u*(v'*Temp)/(v'*u);
+   Temp=Temp*partialprod(b,u,2);
+   %Temp=pinv(P-lambda*eye(n))*(eye(n)-u*v'/(v'*u))*partialprod(b,u,2);
    sigmaT=norm_helper+u'*(norm_helper2+norm_helper2');
-   Jac=(eye(n)-u*sigmaT/(sigmaT*u))*Temp;
+   %Jac=(eye(n)-u*sigmaT/(sigmaT*u))*Temp;
+   Jac=Temp-u*(sigmaT*Temp)/(sigmaT*u);
    y=y-(eye(n)-Jac)\(y-u);
 
    x=e-y;res=norm(x-a-b*kron(x,x));
