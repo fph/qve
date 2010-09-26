@@ -1,4 +1,4 @@
-function [a M BM]=make_mbt(kind,param);
+function [a M BM]=make_mbt(kind,param,param2)
 % [a M b]=make_mbt(kind,param);
 %
 % generates an example Markovian binary tree
@@ -66,6 +66,19 @@ elseif(strcmp(kind,'latouche2')==1)
   a=-D0\d;
   BM=-D0\R;
   M=eye(3);
+elseif(strcmp(kind,'rand')==1)
+    if(not(exist('param'))) param=50;end
+    if(not(exist('param2'))) param2=1220;end
+    n=param;
+    s=param2;
+    e=ones(n,1);
+    rand('state',0);
+    b=rand(n,n*n);
+    m=max(b*kron(e,e));
+    mm=m+s;
+    a=mm*e-b*kron(e,e);
+    a=a/mm;BM=b/mm;
+    M=eye(n);
 else
   error('Unknown kind');
 end
